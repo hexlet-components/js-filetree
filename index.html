@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Webpack Package</title>
+    <script src="assets/webpack-package.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="point"></div>
+
+    <script type="text/javascript">
+      const defaultTree = {
+        'src': {
+          type: 'folder',
+          children: {
+            'index.js': {
+              type: 'file',
+              content: '{ name: "example" }',
+            }
+          },
+        },
+        'package.json': {
+          type: 'file',
+          content: '{ name: "example" }',
+        }
+      };
+      window.onload = (event) => {
+        const element = document.getElementById('point');
+        const obj = new HexletFileTree.Component(document, element, defaultTree);
+        obj.start();
+      };
+    </script>
+  </body>
+</html>
