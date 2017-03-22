@@ -4,7 +4,7 @@ start:
 	npm start
 
 develop:
-	NODE_ENV=development npm run webpack -- --watch --config config/webpack.development.babel.js
+	NODE_ENV=development npm run webpack-dev-server
 
 install-deps:
 	yarn

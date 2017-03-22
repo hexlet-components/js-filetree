@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Webpack Package</title>
-    <script src="assets/webpack-package.js" type="text/javascript"></script>
   </head>
   <body>
     <div id="point"></div>
@@ -12,6 +11,15 @@
         'src': {
           type: 'folder',
           children: {
+            'adapters': {
+              type: 'folder',
+              children: {
+                'webdav.js': {
+                  type: 'file',
+                  content: 'some code',
+                }
+              },
+            },
             'index.js': {
               type: 'file',
               content: '{ name: "example" }',
@@ -21,6 +29,10 @@
         'package.json': {
           type: 'file',
           content: '{ name: "example" }',
+        },
+        'yarn.lock': {
+          type: 'file',
+          content: 'list of deps',
         }
       };
       window.onload = (event) => {

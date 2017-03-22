@@ -10,7 +10,13 @@
     "gulp": "gulp",
     "eslint": "eslint",
     "webpack": "webpack",
+    "webpack-dev-server": "webpack-dev-server",
     "start": "npm run webpack -- --config webpack.config.babel.js"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "__fixtures__"
+    ]
   },
   "repository": {
     "type": "git",
@@ -23,24 +29,28 @@
   },
   "homepage": "https://github.com/hexlet-boilerplates/webpack-package#readme",
   "dependencies": {
-    "gulp": "*"
+    "js-beautify": "^1.6.8",
+    "lodash": "^4",
+    "vdom-parser": "^1",
+    "vdom-to-html": "^2.3.1",
+    "virtual-dom": "^2"
   },
   "devDependencies": {
     "babel-eslint": "*",
     "babel-loader": "*",
-    "babel-plugin-syntax-flow": "*",
-    "babel-plugin-transform-flow-strip-types": "*",
-    "babel-plugin-transform-runtime": "*",
     "babel-preset-env": "*",
+    "babel-preset-flow": "*",
     "babel-preset-stage-0": "*",
     "debug": "^2",
     "eslint": "*",
     "eslint-config-airbnb-base": "*",
     "eslint-plugin-flowtype": "*",
     "eslint-plugin-import": "*",
-    "flow-bin": "^0.38.0",
+    "flow-bin": "^0.42.0",
     "flow-typed": "*",
-    "jest": "^18",
-    "webpack": "*"
+    "html-webpack-plugin": "^2.28.0",
+    "jest": "^19",
+    "webpack": "*",
+    "webpack-dev-server": "^2.4.2"
   }
 }
