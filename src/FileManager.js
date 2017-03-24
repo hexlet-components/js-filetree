@@ -3,6 +3,10 @@
 import _ from 'lodash';
 
 export default class {
+  static foldersButtonMapping = {
+    closeFolder: 'openFolder',
+    openFolder: 'closeFolder',
+  };
   static folderEntity = '&#128193;';
   static openFolderEntity = '&#128194;';
 
@@ -10,6 +14,7 @@ export default class {
   filetreePoint: HTMLElement;
   root: Document;
   data: Object;
+  nextFoldersButtonAction: Bool = 'openFolder';
 
   constructor(root: Document, filetreePoint: HTMLElement, contentPoint: HTMLElement, initialData: Object) {
     this.root = root;
@@ -27,53 +32,60 @@ export default class {
     return box;
   }
 
-  addFile(path: string) {
+  buildFileBox(path: string) {
     const parts = path.split('/');
     const name = _.last(parts);
     const item = this.buildItem((box, link) => {
+      box.className = 'file-box';
+      box.setAttribute('data-path', path);
+
       const text = this.root.createTextNode(name);
       link.appendChild(text);
       link.className = 'file';
       link.addEventListener('click', () => {
-        this.openFile(link, path);
+        this.openFile(box);
       });
     });
 
     return item;
   }
 
-  openFile(link: HTMLElement, path: string) {
+  buildFolderBox(path: string) {
+    const name = _.last(path.split('/'));
+    const item = this.buildItem((box, link) => {
+      box.className = 'folder-box';
+      box.setAttribute('data-path', path);
+      link.innerHTML = `${this.constructor.folderEntity} ${name}`;
+      link.className = 'folder';
+      link.setAttribute('data-path', path);
+      link.addEventListener('click', () => {
+        this.openFolder(box);
+      });
+    });
+
+    return item;
+  }
+
+  openFile(box: Node) {
+    const path = box.dataset.path;
     const parts = path.split('/');
     const node = this.getChildBy(parts);
-    const files = this.filetreePoint.querySelectorAll('a.file');
-    files.forEach((file) => {
-      file.style.backgroundColor = '#fff';
+    const boxes = this.filetreePoint.querySelectorAll('.file-box');
+    boxes.forEach((b) => {
+      b.style.backgroundColor = '#fff';
     });
-    link.style.backgroundColor = '#eee';
+    box.style.backgroundColor = '#eee';
 
     this.renderContent(path, node.content);
   }
 
-  addFolder(path: string) {
-    const name = path.split('/').reverse()[0];
-    const item = this.buildItem((box, link) => {
-      link.innerHTML = `${this.constructor.folderEntity} ${name}`;
-      link.className = 'folder';
-      link.setAttribute('data-name', name);
-      link.addEventListener('click', () => {
-        this.openFolder(box, path);
-      });
-    });
-
-    return item;
-  }
-
-  openFolder(box: Node, path: string) {
+  openFolder(box: Node) {
+    const path = box.dataset.path;
     const parts = path.split('/');
     const name = _.last(parts);
     const node = this.getChildBy(parts);
     const link = this.root.createElement('a');
-    link.setAttribute('data-name', name);
+    // link.setAttribute('data-name', name);
     link.href = '#';
     link.innerHTML = `${this.constructor.openFolderEntity} ${name}`;
 
@@ -88,7 +100,8 @@ export default class {
     this.renderSubTree(node.children, box, path);
   }
 
-  closeFolder(box: Node, path: string) {
+  closeFolder(box: Node) {
+    const path = box.dataset.path;
     const parts = path.split('/');
     const name = _.last(parts);
     const link = this.root.createElement('a');
@@ -105,9 +118,21 @@ export default class {
     });
   }
 
+  changeFoldersStatus() {
+    const folders = this.filetreePoint.querySelectorAll('.folder-box');
+    folders.forEach((box) => {
+      this[this.nextFoldersButtonAction](box);
+    });
+    this.nextFoldersButtonAction =
+      this.constructor.foldersButtonMapping[this.nextFoldersButtonAction];
+  }
+
   render() {
     const button = this.root.createElement('button');
-    button.innerHTML = 'open folders';
+    button.innerHTML = 'toggle folders';
+    button.addEventListener('click', () => {
+      this.changeFoldersStatus();
+    });
     this.filetreePoint.appendChild(button);
     this.renderSubTree(this.data, this.filetreePoint);
   }
@@ -122,11 +147,11 @@ export default class {
       let el;
       switch (type) {
         case 'folder': {
-          el = this.addFolder(path);
+          el = this.buildFolderBox(path);
           break;
         }
         case 'file': {
-          el = this.addFile(path);
+          el = this.buildFileBox(path);
           break;
         }
         default:
