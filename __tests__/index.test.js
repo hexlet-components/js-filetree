@@ -1,8 +1,11 @@
 // @flow
 
+import $ from 'jquery';
 import { html } from 'js-beautify';
 import { Component } from '../src';
 import initialTree from './__fixtures__/initialTree';
+
+window.addEventListener('error', event => console.error(event.error));
 
 describe('filetree', () => {
   let component;
@@ -13,11 +16,19 @@ describe('filetree', () => {
     component.start();
   });
 
-  it('should work', () => {
+  it('render', () => {
     expect(html(document.body.innerHTML)).toMatchSnapshot();
   });
 
-  it('should work', () => {
-    console.log(document.body.innerHTML);
+  it('toggle folders', () => {
+    const buttonElement = $('.toggle-folders-button');
+    buttonElement.click();
+    expect(html(document.body.innerHTML)).toMatchSnapshot();
+
+    buttonElement.click();
+    expect(html(document.body.innerHTML)).toMatchSnapshot();
+
+    buttonElement.click();
+    expect(html(document.body.innerHTML)).toMatchSnapshot();
   });
 });

@@ -28,4 +28,7 @@ lint:
 publish:
 	npm publish
 
+watch:
+	DEBUG=fm npm run jest -- --watch
+
 .PHONY: test

@@ -1,6 +1,11 @@
 // @flow
 
 import _ from 'lodash';
+import debug from 'debug';
+
+import { removeChildren } from './domUtils';
+
+const log = debug('fm');
 
 export default class {
   static foldersButtonMapping = {
@@ -67,7 +72,8 @@ export default class {
   }
 
   openFile(box: Node) {
-    const path = box.dataset.path;
+    const path = box.getAttribute('data-path');
+    log('action', 'openFile', path);
     const parts = path.split('/');
     const node = this.getChildBy(parts);
     const boxes = this.filetreePoint.querySelectorAll('.file-box');
@@ -80,7 +86,8 @@ export default class {
   }
 
   openFolder(box: Node) {
-    const path = box.dataset.path;
+    const path = box.getAttribute('data-path');
+    // log('action', 'openFolder');
     const parts = path.split('/');
     const name = _.last(parts);
     const node = this.getChildBy(parts);
@@ -89,9 +96,7 @@ export default class {
     link.href = '#';
     link.innerHTML = `${this.constructor.openFolderEntity} ${name}`;
 
-    const range = this.root.createRange();
-    range.selectNodeContents(box);
-    range.deleteContents();
+    removeChildren(box);
 
     box.appendChild(link);
     link.addEventListener('click', () => {
@@ -101,16 +106,14 @@ export default class {
   }
 
   closeFolder(box: Node) {
-    const path = box.dataset.path;
+    const path = box.getAttribute('data-path');
     const parts = path.split('/');
     const name = _.last(parts);
     const link = this.root.createElement('a');
     link.href = '#';
     link.innerHTML = `${this.constructor.folderEntity} ${name}`;
 
-    const range = this.root.createRange();
-    range.selectNodeContents(box);
-    range.deleteContents();
+    removeChildren(box)
 
     box.appendChild(link);
     link.addEventListener('click', () => {
@@ -119,6 +122,7 @@ export default class {
   }
 
   changeFoldersStatus() {
+    log('action', 'changeFolderStatus');
     const folders = this.filetreePoint.querySelectorAll('.folder-box');
     folders.forEach((box) => {
       this[this.nextFoldersButtonAction](box);
@@ -129,8 +133,10 @@ export default class {
 
   render() {
     const button = this.root.createElement('button');
+    button.className = 'toggle-folders-button';
     button.innerHTML = 'toggle folders';
     button.addEventListener('click', () => {
+      log('event', 'click', button.className);
       this.changeFoldersStatus();
     });
     this.filetreePoint.appendChild(button);
@@ -170,9 +176,7 @@ export default class {
     textarea.appendChild(text);
     div.appendChild(textarea);
 
-    const range = this.root.createRange();
-    range.selectNodeContents(this.contentPoint);
-    range.deleteContents();
+    removeChildren(this.contentPoint);
     this.contentPoint.appendChild(div);
 
     const button = this.root.createElement('button');

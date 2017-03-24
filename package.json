@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "test": "jest",
+    "jest": "jest",
     "babel-node": "babel-node",
     "flow": "flow",
     "flow-typed": "flow-typed",
@@ -36,6 +37,7 @@
     "virtual-dom": "^2"
   },
   "devDependencies": {
+    "jquery": "^3",
     "babel-eslint": "*",
     "babel-loader": "*",
     "babel-preset-env": "*",

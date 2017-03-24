@@ -1,15 +1,140 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`filetree should work 1`] = `
+exports[`filetree render 1`] = `
 "<div>
     <table>
         <tbody>
             <tr>
-                <td class=\\"filetree\\"><button>open folders</button>
+                <td class=\\"filetree\\"><button class=\\"toggle-folders-button\\">toggle folders</button>
                     <ul>
-                        <li><a href=\\"#\\" class=\\"folder\\" data-name=\\"src\\">📁 src</a></li>
-                        <li><a href=\\"#\\" class=\\"file\\">package.json</a></li>
-                        <li><a href=\\"#\\" class=\\"file\\">yarn.lock</a></li>
+                        <li class=\\"folder-box\\" data-path=\\"src\\"><a href=\\"#\\" class=\\"folder\\" data-path=\\"src\\">📁 src</a></li>
+                        <li class=\\"file-box\\" data-path=\\"package.json\\"><a href=\\"#\\" class=\\"file\\">package.json</a></li>
+                        <li class=\\"file-box\\" data-path=\\"yarn.lock\\"><a href=\\"#\\" class=\\"file\\">yarn.lock</a></li>
+                    </ul>
+                </td>
+                <td class=\\"editor\\"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>"
+`;
+
+exports[`filetree toggle folders 1`] = `
+"<div>
+    <table>
+        <tbody>
+            <tr>
+                <td class=\\"filetree\\"><button class=\\"toggle-folders-button\\">toggle folders</button>
+                    <ul>
+                        <li class=\\"folder-box\\" data-path=\\"src\\"><a href=\\"#\\">📂 src</a>
+                            <ul>
+                                <li class=\\"folder-box\\" data-path=\\"src/adapters\\"><a href=\\"#\\" class=\\"folder\\" data-path=\\"src/adapters\\">📁 adapters</a></li>
+                                <li class=\\"file-box\\" data-path=\\"src/index.js\\"><a href=\\"#\\" class=\\"file\\">index.js</a></li>
+                            </ul>
+                        </li>
+                        <li class=\\"file-box\\" data-path=\\"package.json\\"><a href=\\"#\\" class=\\"file\\">package.json</a></li>
+                        <li class=\\"file-box\\" data-path=\\"yarn.lock\\"><a href=\\"#\\" class=\\"file\\">yarn.lock</a></li>
+                    </ul>
+                </td>
+                <td class=\\"editor\\"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <table>
+        <tbody>
+            <tr>
+                <td class=\\"filetree\\"><button class=\\"toggle-folders-button\\">toggle folders</button>
+                    <ul>
+                        <li class=\\"folder-box\\" data-path=\\"src\\"><a href=\\"#\\">📂 src</a>
+                            <ul>
+                                <li class=\\"folder-box\\" data-path=\\"src/adapters\\"><a href=\\"#\\" class=\\"folder\\" data-path=\\"src/adapters\\">📁 adapters</a></li>
+                                <li class=\\"file-box\\" data-path=\\"src/index.js\\"><a href=\\"#\\" class=\\"file\\">index.js</a></li>
+                            </ul>
+                        </li>
+                        <li class=\\"file-box\\" data-path=\\"package.json\\"><a href=\\"#\\" class=\\"file\\">package.json</a></li>
+                        <li class=\\"file-box\\" data-path=\\"yarn.lock\\"><a href=\\"#\\" class=\\"file\\">yarn.lock</a></li>
+                    </ul>
+                </td>
+                <td class=\\"editor\\"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>"
+`;
+
+exports[`filetree toggle folders 2`] = `
+"<div>
+    <table>
+        <tbody>
+            <tr>
+                <td class=\\"filetree\\"><button class=\\"toggle-folders-button\\">toggle folders</button>
+                    <ul>
+                        <li class=\\"folder-box\\" data-path=\\"src\\"><a href=\\"#\\">📁 src</a></li>
+                        <li class=\\"file-box\\" data-path=\\"package.json\\"><a href=\\"#\\" class=\\"file\\">package.json</a></li>
+                        <li class=\\"file-box\\" data-path=\\"yarn.lock\\"><a href=\\"#\\" class=\\"file\\">yarn.lock</a></li>
+                    </ul>
+                </td>
+                <td class=\\"editor\\"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <table>
+        <tbody>
+            <tr>
+                <td class=\\"filetree\\"><button class=\\"toggle-folders-button\\">toggle folders</button>
+                    <ul>
+                        <li class=\\"folder-box\\" data-path=\\"src\\"><a href=\\"#\\">📁 src</a></li>
+                        <li class=\\"file-box\\" data-path=\\"package.json\\"><a href=\\"#\\" class=\\"file\\">package.json</a></li>
+                        <li class=\\"file-box\\" data-path=\\"yarn.lock\\"><a href=\\"#\\" class=\\"file\\">yarn.lock</a></li>
+                    </ul>
+                </td>
+                <td class=\\"editor\\"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>"
+`;
+
+exports[`filetree toggle folders 3`] = `
+"<div>
+    <table>
+        <tbody>
+            <tr>
+                <td class=\\"filetree\\"><button class=\\"toggle-folders-button\\">toggle folders</button>
+                    <ul>
+                        <li class=\\"folder-box\\" data-path=\\"src\\"><a href=\\"#\\">📂 src</a>
+                            <ul>
+                                <li class=\\"folder-box\\" data-path=\\"src/adapters\\"><a href=\\"#\\" class=\\"folder\\" data-path=\\"src/adapters\\">📁 adapters</a></li>
+                                <li class=\\"file-box\\" data-path=\\"src/index.js\\"><a href=\\"#\\" class=\\"file\\">index.js</a></li>
+                            </ul>
+                        </li>
+                        <li class=\\"file-box\\" data-path=\\"package.json\\"><a href=\\"#\\" class=\\"file\\">package.json</a></li>
+                        <li class=\\"file-box\\" data-path=\\"yarn.lock\\"><a href=\\"#\\" class=\\"file\\">yarn.lock</a></li>
+                    </ul>
+                </td>
+                <td class=\\"editor\\"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <table>
+        <tbody>
+            <tr>
+                <td class=\\"filetree\\"><button class=\\"toggle-folders-button\\">toggle folders</button>
+                    <ul>
+                        <li class=\\"folder-box\\" data-path=\\"src\\"><a href=\\"#\\">📂 src</a>
+                            <ul>
+                                <li class=\\"folder-box\\" data-path=\\"src/adapters\\"><a href=\\"#\\" class=\\"folder\\" data-path=\\"src/adapters\\">📁 adapters</a></li>
+                                <li class=\\"file-box\\" data-path=\\"src/index.js\\"><a href=\\"#\\" class=\\"file\\">index.js</a></li>
+                            </ul>
+                        </li>
+                        <li class=\\"file-box\\" data-path=\\"package.json\\"><a href=\\"#\\" class=\\"file\\">package.json</a></li>
+                        <li class=\\"file-box\\" data-path=\\"yarn.lock\\"><a href=\\"#\\" class=\\"file\\">yarn.lock</a></li>
                     </ul>
                 </td>
                 <td class=\\"editor\\"></td>
