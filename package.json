@@ -34,16 +34,16 @@
     "lodash": "^4",
     "vdom-parser": "^1",
     "vdom-to-html": "^2.3.1",
+    "debug": "^2",
     "virtual-dom": "^2"
   },
   "devDependencies": {
-    "jquery": "^3",
+    "babel-polyfill": "*",
     "babel-eslint": "*",
     "babel-loader": "*",
     "babel-preset-env": "*",
     "babel-preset-flow": "*",
     "babel-preset-stage-0": "*",
-    "debug": "^2",
     "eslint": "*",
     "eslint-config-airbnb-base": "*",
     "eslint-plugin-flowtype": "*",
@@ -52,6 +52,7 @@
     "flow-typed": "*",
     "html-webpack-plugin": "^2.28.0",
     "jest": "^19",
+    "jquery": "^3",
     "webpack": "*",
     "webpack-dev-server": "^2.4.2"
   }

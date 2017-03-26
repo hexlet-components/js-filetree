@@ -3,7 +3,7 @@
 import _ from 'lodash';
 import debug from 'debug';
 
-import { removeChildren } from './domUtils';
+import { removeChildren, fetchAttribute } from './domUtils';
 
 const log = debug('fm');
 
@@ -19,7 +19,7 @@ export default class {
   filetreePoint: HTMLElement;
   root: Document;
   data: Object;
-  nextFoldersButtonAction: Bool = 'openFolder';
+  nextFoldersButtonAction: string = 'openFolder';
 
   constructor(root: Document, filetreePoint: HTMLElement, contentPoint: HTMLElement, initialData: Object) {
     this.root = root;
@@ -48,6 +48,7 @@ export default class {
       link.appendChild(text);
       link.className = 'file';
       link.addEventListener('click', () => {
+        log('event', 'click', link.className);
         this.openFile(box);
       });
     });
@@ -60,10 +61,10 @@ export default class {
     const item = this.buildItem((box, link) => {
       box.className = 'folder-box';
       box.setAttribute('data-path', path);
-      link.innerHTML = `${this.constructor.folderEntity} ${name}`;
       link.className = 'folder';
-      link.setAttribute('data-path', path);
+      link.innerHTML = `${this.constructor.folderEntity} ${name}`;
       link.addEventListener('click', () => {
+        log('event', 'click', link.className);
         this.openFolder(box);
       });
     });
@@ -71,8 +72,8 @@ export default class {
     return item;
   }
 
-  openFile(box: Node) {
-    const path = box.getAttribute('data-path');
+  openFile(box: HTMLElement) {
+    const path = fetchAttribute(box, 'data-path');
     log('action', 'openFile', path);
     const parts = path.split('/');
     const node = this.getChildBy(parts);
@@ -85,47 +86,54 @@ export default class {
     this.renderContent(path, node.content);
   }
 
-  openFolder(box: Node) {
-    const path = box.getAttribute('data-path');
-    // log('action', 'openFolder');
+  openFolder(box: HTMLElement) {
+    const path = fetchAttribute(box, 'data-path');
+    log('action', 'openFolder', path);
     const parts = path.split('/');
     const name = _.last(parts);
     const node = this.getChildBy(parts);
     const link = this.root.createElement('a');
-    // link.setAttribute('data-name', name);
     link.href = '#';
+    link.className = 'folder';
     link.innerHTML = `${this.constructor.openFolderEntity} ${name}`;
 
     removeChildren(box);
 
-    box.appendChild(link);
+    // console.log(path)
     link.addEventListener('click', () => {
-      this.closeFolder(box, path);
+      this.closeFolder(box);
     });
+    box.appendChild(link);
     this.renderSubTree(node.children, box, path);
   }
 
-  closeFolder(box: Node) {
-    const path = box.getAttribute('data-path');
+  closeFolder(box: HTMLElement) {
+    const path = fetchAttribute(box, 'data-path');
+    log('action', 'closeFolder', path);
     const parts = path.split('/');
     const name = _.last(parts);
     const link = this.root.createElement('a');
     link.href = '#';
+    link.className = 'folder';
     link.innerHTML = `${this.constructor.folderEntity} ${name}`;
 
-    removeChildren(box)
+    removeChildren(box);
 
-    box.appendChild(link);
     link.addEventListener('click', () => {
-      this.openFolder(box, path);
+      this.openFolder(box);
     });
+    box.appendChild(link);
   }
 
   changeFoldersStatus() {
     log('action', 'changeFolderStatus');
     const folders = this.filetreePoint.querySelectorAll('.folder-box');
     folders.forEach((box) => {
-      this[this.nextFoldersButtonAction](box);
+      const f = this[this.nextFoldersButtonAction];
+      if (!f) {
+        throw new Error();
+      }
+      f.bind(this)(box);
     });
     this.nextFoldersButtonAction =
       this.constructor.foldersButtonMapping[this.nextFoldersButtonAction];
@@ -182,6 +190,7 @@ export default class {
     const button = this.root.createElement('button');
     button.innerHTML = 'save';
     button.addEventListener('click', () => {
+      log('event', 'click', button.className);
       this.saveContent(path, textarea);
     });
     this.contentPoint.appendChild(button);
