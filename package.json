@@ -30,11 +30,11 @@
   },
   "homepage": "https://github.com/hexlet-boilerplates/webpack-package#readme",
   "dependencies": {
-    "js-beautify": "^1.6.8",
+    "js-beautify": "^1.15.4",
     "lodash": "^4",
     "vdom-parser": "^1",
     "vdom-to-html": "^2.3.1",
-    "debug": "^3",
+    "debug": "^4",
     "virtual-dom": "^2"
   },
   "devDependencies": {
@@ -48,12 +48,12 @@
     "eslint-config-airbnb-base": "*",
     "eslint-plugin-flowtype": "*",
     "eslint-plugin-import": "*",
-    "flow-bin": "^0.42.0",
+    "flow-bin": "^0.308.0",
     "flow-typed": "*",
-    "html-webpack-plugin": "^2.28.0",
-    "jest": "^19",
-    "jquery": "^3",
+    "html-webpack-plugin": "^5.6.6",
+    "jest": "^30",
+    "jquery": "^4",
     "webpack": "*",
-    "webpack-dev-server": "^2.4.2"
+    "webpack-dev-server": "^5.2.3"
   }
 }
