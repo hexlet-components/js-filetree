@@ -54,6 +54,6 @@
     "jest": "^30",
     "jquery": "^4",
     "webpack": "*",
-    "webpack-dev-server": "^5.2.3"
+    "webpack-dev-server": "^5.2.4"
   }
 }
