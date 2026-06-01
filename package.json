@@ -2,22 +2,14 @@
   "name": "webpack-package",
   "version": "0.0.1",
   "description": "",
-  "scripts": {
-    "test": "jest",
-    "jest": "jest",
-    "babel-node": "babel-node",
-    "flow": "flow",
-    "flow-typed": "flow-typed",
-    "gulp": "gulp",
-    "eslint": "eslint",
-    "webpack": "webpack",
-    "webpack-dev-server": "webpack-dev-server",
-    "start": "npm run webpack -- --config webpack.config.babel.js"
+  "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=26.0"
   },
-  "jest": {
-    "modulePathIgnorePatterns": [
-      "__fixtures__"
-    ]
+  "scripts": {
+    "test": "vitest run",
+    "lint": "biome check ."
   },
   "repository": {
     "type": "git",
@@ -38,22 +30,8 @@
     "virtual-dom": "^2"
   },
   "devDependencies": {
-    "babel-polyfill": "*",
-    "babel-eslint": "*",
-    "babel-loader": "*",
-    "babel-preset-env": "*",
-    "babel-preset-flow": "*",
-    "babel-preset-stage-0": "*",
-    "eslint": "*",
-    "eslint-config-airbnb-base": "*",
-    "eslint-plugin-flowtype": "*",
-    "eslint-plugin-import": "*",
-    "flow-bin": "^0.308.0",
-    "flow-typed": "*",
-    "html-webpack-plugin": "^5.6.6",
-    "jest": "^30",
-    "jquery": "^4",
-    "webpack": "*",
-    "webpack-dev-server": "^5.2.4"
+    "@biomejs/biome": "^2.2.4",
+    "jsdom": "^25.0.1",
+    "vitest": "^4.0.15"
   }
 }

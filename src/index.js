@@ -1,14 +1,14 @@
-// @flow
+//
 
 import FileManager from './FileManager';
 
 export class Component {
-  mountElement: HTMLElement;
-  root: Document;
-  initialTree: Object;
-  filemanager: FileManager;
+  mountElement;
+  root;
+  initialTree;
+  filemanager;
 
-  constructor(root: Document, mountElement: HTMLElement, initialTree: Object) {
+  constructor(root, mountElement, initialTree) {
     this.initialTree = initialTree;
     this.mountElement = mountElement;
     this.root = root;
@@ -31,7 +31,12 @@ export class Component {
     if (!content) {
       throw new Error();
     }
-    this.filemanager = new FileManager(this.root, filetree, content, this.initialTree);
+    this.filemanager = new FileManager(
+      this.root,
+      filetree,
+      content,
+      this.initialTree,
+    );
     this.filemanager.render();
   }
 }
