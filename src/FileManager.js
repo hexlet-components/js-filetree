@@ -1,9 +1,9 @@
-// @flow
+//
 
-import _ from 'lodash';
 import debug from 'debug';
+import _ from 'lodash';
 
-import { removeChildren, fetchAttribute } from './domUtils';
+import { fetchAttribute, removeChildren } from './domUtils';
 
 const log = debug('fm');
 
@@ -15,20 +15,20 @@ export default class {
   static folderEntity = '&#128193;';
   static openFolderEntity = '&#128194;';
 
-  contentPoint: HTMLElement;
-  filetreePoint: HTMLElement;
-  root: Document;
-  data: Object;
-  nextFoldersButtonAction: string = 'openFolder';
+  contentPoint;
+  filetreePoint;
+  root;
+  data;
+  nextFoldersButtonAction = 'openFolder';
 
-  constructor(root: Document, filetreePoint: HTMLElement, contentPoint: HTMLElement, initialData: Object) {
+  constructor(root, filetreePoint, contentPoint, initialData) {
     this.root = root;
     this.filetreePoint = filetreePoint;
     this.contentPoint = contentPoint;
     this.data = initialData;
   }
 
-  buildItem(cb: Function) {
+  buildItem(cb) {
     const box = this.root.createElement('li');
     const link = this.root.createElement('a');
     link.href = '#';
@@ -37,7 +37,7 @@ export default class {
     return box;
   }
 
-  buildFileBox(path: string) {
+  buildFileBox(path) {
     const parts = path.split('/');
     const name = _.last(parts);
     const item = this.buildItem((box, link) => {
@@ -56,7 +56,7 @@ export default class {
     return item;
   }
 
-  buildFolderBox(path: string) {
+  buildFolderBox(path) {
     const name = _.last(path.split('/'));
     const item = this.buildItem((box, link) => {
       box.className = 'folder-box';
@@ -72,7 +72,7 @@ export default class {
     return item;
   }
 
-  openFile(box: HTMLElement) {
+  openFile(box) {
     const path = fetchAttribute(box, 'data-path');
     log('action', 'openFile', path);
     const parts = path.split('/');
@@ -86,7 +86,7 @@ export default class {
     this.renderContent(path, node.content);
   }
 
-  openFolder(box: HTMLElement) {
+  openFolder(box) {
     const path = fetchAttribute(box, 'data-path');
     log('action', 'openFolder', path);
     const parts = path.split('/');
@@ -107,7 +107,7 @@ export default class {
     this.renderSubTree(node.children, box, path);
   }
 
-  closeFolder(box: HTMLElement) {
+  closeFolder(box) {
     const path = fetchAttribute(box, 'data-path');
     log('action', 'closeFolder', path);
     const parts = path.split('/');
@@ -151,7 +151,7 @@ export default class {
     this.renderSubTree(this.data, this.filetreePoint);
   }
 
-  renderSubTree(data: Object, mountPoint: Node, ancestry: ?string) {
+  renderSubTree(data, mountPoint, ancestry) {
     const keys = Object.keys(data);
     const container = this.root.createElement('ul');
     mountPoint.appendChild(container);
@@ -175,7 +175,7 @@ export default class {
     });
   }
 
-  renderContent(path: string, content: string) {
+  renderContent(path, content) {
     const div = this.root.createElement('div');
     const textarea = this.root.createElement('textarea');
     const text = this.root.createTextNode(content);
@@ -196,15 +196,15 @@ export default class {
     this.contentPoint.appendChild(button);
   }
 
-  saveContent(path: string, textarea: HTMLTextAreaElement) {
+  saveContent(path, textarea) {
     const parts = path.split('/');
     const node = this.getChildBy(parts);
     node.content = textarea.value;
   }
 
-  getChildBy(ancestry: Array<string>) {
+  getChildBy(ancestry) {
     const iter = ([key, ...rest], acc) =>
-      (rest.length === 0 ? acc[key] : iter(rest, acc[key].children));
+      rest.length === 0 ? acc[key] : iter(rest, acc[key].children);
 
     return iter(ancestry, this.data);
   }

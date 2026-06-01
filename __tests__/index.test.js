@@ -1,12 +1,11 @@
-// @flow
+//
 
-import 'babel-polyfill';
 // import $ from 'jquery';
 import { html } from 'js-beautify';
 import { Component } from '../src';
 import initialTree from './__fixtures__/initialTree';
 
-window.addEventListener('error', event => console.error(event.error));
+window.addEventListener('error', (event) => console.error(event.error));
 // window.onerror = (...args) => console.log(args);
 // document.raise = (type, message, data) => {
 //   if (data.error) {
@@ -23,7 +22,7 @@ const getItemByPath = (name) => {
   }
 
   return element;
-}
+};
 
 const body = document.body;
 if (!body) {
