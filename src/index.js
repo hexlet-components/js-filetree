@@ -1,6 +1,6 @@
 //
 
-import FileManager from './FileManager';
+import FileManager from "./FileManager";
 
 export class Component {
   mountElement;
@@ -23,20 +23,15 @@ export class Component {
     </table>
     `;
 
-    const filetree = this.mountElement.querySelector('.filetree');
+    const filetree = this.mountElement.querySelector(".filetree");
     if (!filetree) {
       throw new Error();
     }
-    const content = this.mountElement.querySelector('.editor');
+    const content = this.mountElement.querySelector(".editor");
     if (!content) {
       throw new Error();
     }
-    this.filemanager = new FileManager(
-      this.root,
-      filetree,
-      content,
-      this.initialTree,
-    );
+    this.filemanager = new FileManager(this.root, filetree, content, this.initialTree);
     this.filemanager.render();
   }
 }

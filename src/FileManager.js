@@ -1,25 +1,25 @@
 //
 
-import debug from 'debug';
-import _ from 'lodash';
+import debug from "debug";
+import _ from "lodash";
 
-import { fetchAttribute, removeChildren } from './domUtils';
+import { fetchAttribute, removeChildren } from "./domUtils";
 
-const log = debug('fm');
+const log = debug("fm");
 
 export default class {
   static foldersButtonMapping = {
-    closeFolder: 'openFolder',
-    openFolder: 'closeFolder',
+    closeFolder: "openFolder",
+    openFolder: "closeFolder",
   };
-  static folderEntity = '&#128193;';
-  static openFolderEntity = '&#128194;';
+  static folderEntity = "&#128193;";
+  static openFolderEntity = "&#128194;";
 
   contentPoint;
   filetreePoint;
   root;
   data;
-  nextFoldersButtonAction = 'openFolder';
+  nextFoldersButtonAction = "openFolder";
 
   constructor(root, filetreePoint, contentPoint, initialData) {
     this.root = root;
@@ -29,26 +29,26 @@ export default class {
   }
 
   buildItem(cb) {
-    const box = this.root.createElement('li');
-    const link = this.root.createElement('a');
-    link.href = '#';
+    const box = this.root.createElement("li");
+    const link = this.root.createElement("a");
+    link.href = "#";
     box.appendChild(link);
     cb(box, link);
     return box;
   }
 
   buildFileBox(path) {
-    const parts = path.split('/');
+    const parts = path.split("/");
     const name = _.last(parts);
     const item = this.buildItem((box, link) => {
-      box.className = 'file-box';
-      box.setAttribute('data-path', path);
+      box.className = "file-box";
+      box.setAttribute("data-path", path);
 
       const text = this.root.createTextNode(name);
       link.appendChild(text);
-      link.className = 'file';
-      link.addEventListener('click', () => {
-        log('event', 'click', link.className);
+      link.className = "file";
+      link.addEventListener("click", () => {
+        log("event", "click", link.className);
         this.openFile(box);
       });
     });
@@ -57,14 +57,14 @@ export default class {
   }
 
   buildFolderBox(path) {
-    const name = _.last(path.split('/'));
+    const name = _.last(path.split("/"));
     const item = this.buildItem((box, link) => {
-      box.className = 'folder-box';
-      box.setAttribute('data-path', path);
-      link.className = 'folder';
+      box.className = "folder-box";
+      box.setAttribute("data-path", path);
+      link.className = "folder";
       link.innerHTML = `${this.constructor.folderEntity} ${name}`;
-      link.addEventListener('click', () => {
-        log('event', 'click', link.className);
+      link.addEventListener("click", () => {
+        log("event", "click", link.className);
         this.openFolder(box);
       });
     });
@@ -73,34 +73,34 @@ export default class {
   }
 
   openFile(box) {
-    const path = fetchAttribute(box, 'data-path');
-    log('action', 'openFile', path);
-    const parts = path.split('/');
+    const path = fetchAttribute(box, "data-path");
+    log("action", "openFile", path);
+    const parts = path.split("/");
     const node = this.getChildBy(parts);
-    const boxes = this.filetreePoint.querySelectorAll('.file-box');
+    const boxes = this.filetreePoint.querySelectorAll(".file-box");
     boxes.forEach((b) => {
-      b.style.backgroundColor = '#fff';
+      b.style.backgroundColor = "#fff";
     });
-    box.style.backgroundColor = '#eee';
+    box.style.backgroundColor = "#eee";
 
     this.renderContent(path, node.content);
   }
 
   openFolder(box) {
-    const path = fetchAttribute(box, 'data-path');
-    log('action', 'openFolder', path);
-    const parts = path.split('/');
+    const path = fetchAttribute(box, "data-path");
+    log("action", "openFolder", path);
+    const parts = path.split("/");
     const name = _.last(parts);
     const node = this.getChildBy(parts);
-    const link = this.root.createElement('a');
-    link.href = '#';
-    link.className = 'folder';
+    const link = this.root.createElement("a");
+    link.href = "#";
+    link.className = "folder";
     link.innerHTML = `${this.constructor.openFolderEntity} ${name}`;
 
     removeChildren(box);
 
     // console.log(path)
-    link.addEventListener('click', () => {
+    link.addEventListener("click", () => {
       this.closeFolder(box);
     });
     box.appendChild(link);
@@ -108,26 +108,26 @@ export default class {
   }
 
   closeFolder(box) {
-    const path = fetchAttribute(box, 'data-path');
-    log('action', 'closeFolder', path);
-    const parts = path.split('/');
+    const path = fetchAttribute(box, "data-path");
+    log("action", "closeFolder", path);
+    const parts = path.split("/");
     const name = _.last(parts);
-    const link = this.root.createElement('a');
-    link.href = '#';
-    link.className = 'folder';
+    const link = this.root.createElement("a");
+    link.href = "#";
+    link.className = "folder";
     link.innerHTML = `${this.constructor.folderEntity} ${name}`;
 
     removeChildren(box);
 
-    link.addEventListener('click', () => {
+    link.addEventListener("click", () => {
       this.openFolder(box);
     });
     box.appendChild(link);
   }
 
   changeFoldersStatus() {
-    log('action', 'changeFolderStatus');
-    const folders = this.filetreePoint.querySelectorAll('.folder-box');
+    log("action", "changeFolderStatus");
+    const folders = this.filetreePoint.querySelectorAll(".folder-box");
     folders.forEach((box) => {
       const f = this[this.nextFoldersButtonAction];
       if (!f) {
@@ -140,11 +140,11 @@ export default class {
   }
 
   render() {
-    const button = this.root.createElement('button');
-    button.className = 'toggle-folders-button';
-    button.innerHTML = 'toggle folders';
-    button.addEventListener('click', () => {
-      log('event', 'click', button.className);
+    const button = this.root.createElement("button");
+    button.className = "toggle-folders-button";
+    button.innerHTML = "toggle folders";
+    button.addEventListener("click", () => {
+      log("event", "click", button.className);
       this.changeFoldersStatus();
     });
     this.filetreePoint.appendChild(button);
@@ -153,31 +153,31 @@ export default class {
 
   renderSubTree(data, mountPoint, ancestry) {
     const keys = Object.keys(data);
-    const container = this.root.createElement('ul');
+    const container = this.root.createElement("ul");
     mountPoint.appendChild(container);
     keys.forEach((key) => {
       const { type } = data[key];
       const path = ancestry ? `${ancestry}/${key}` : key;
       let el;
       switch (type) {
-        case 'folder': {
+        case "folder": {
           el = this.buildFolderBox(path);
           break;
         }
-        case 'file': {
+        case "file": {
           el = this.buildFileBox(path);
           break;
         }
         default:
-          throw new Error('!!!');
+          throw new Error("!!!");
       }
       container.appendChild(el);
     });
   }
 
   renderContent(path, content) {
-    const div = this.root.createElement('div');
-    const textarea = this.root.createElement('textarea');
+    const div = this.root.createElement("div");
+    const textarea = this.root.createElement("textarea");
     const text = this.root.createTextNode(content);
     textarea.cols = 40;
     textarea.rows = 10;
@@ -187,17 +187,17 @@ export default class {
     removeChildren(this.contentPoint);
     this.contentPoint.appendChild(div);
 
-    const button = this.root.createElement('button');
-    button.innerHTML = 'save';
-    button.addEventListener('click', () => {
-      log('event', 'click', button.className);
+    const button = this.root.createElement("button");
+    button.innerHTML = "save";
+    button.addEventListener("click", () => {
+      log("event", "click", button.className);
       this.saveContent(path, textarea);
     });
     this.contentPoint.appendChild(button);
   }
 
   saveContent(path, textarea) {
-    const parts = path.split('/');
+    const parts = path.split("/");
     const node = this.getChildBy(parts);
     node.content = textarea.value;
   }
