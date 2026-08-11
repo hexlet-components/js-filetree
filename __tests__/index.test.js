@@ -47,7 +47,7 @@ describe('filetree', () => {
   });
 
   it('render', () => {
-    expect(html(body.innerHTML)).toMatchSnapshot();
+    expect(html(body.innerHTML)).toMatchSnapshot('initial tree');
   });
 
   it('toggle folders', () => {
@@ -57,34 +57,34 @@ describe('filetree', () => {
     }
 
     buttonElement.click();
-    expect(html(body.innerHTML)).toMatchSnapshot();
+    expect(html(body.innerHTML)).toMatchSnapshot('all folders collapsed');
 
     buttonElement.click();
-    expect(html(body.innerHTML)).toMatchSnapshot();
+    expect(html(body.innerHTML)).toMatchSnapshot('all folders expanded again');
 
     buttonElement.click();
-    expect(html(body.innerHTML)).toMatchSnapshot();
+    expect(html(body.innerHTML)).toMatchSnapshot('all folders collapsed again');
   });
 
   it('toggle folder', () => {
     getItemByPath('src').click();
-    expect(html(body.innerHTML)).toMatchSnapshot();
+    expect(html(body.innerHTML)).toMatchSnapshot('src collapsed');
 
     getItemByPath('src').click();
-    expect(html(body.innerHTML)).toMatchSnapshot();
+    expect(html(body.innerHTML)).toMatchSnapshot('src expanded again');
 
     getItemByPath('src').click();
-    expect(html(body.innerHTML)).toMatchSnapshot();
+    expect(html(body.innerHTML)).toMatchSnapshot('src collapsed again');
   });
 
   it('open file', () => {
     getItemByPath('package.json').click();
-    expect(html(body.innerHTML)).toMatchSnapshot();
+    expect(html(body.innerHTML)).toMatchSnapshot('package.json selected');
 
     getItemByPath('yarn.lock').click();
-    expect(html(body.innerHTML)).toMatchSnapshot();
+    expect(html(body.innerHTML)).toMatchSnapshot('selection moved to yarn.lock');
 
     getItemByPath('package.json').click();
-    expect(html(body.innerHTML)).toMatchSnapshot();
+    expect(html(body.innerHTML)).toMatchSnapshot('selection back on package.json');
   });
 });
