@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/hexlet-boilerplates/webpack-package#readme",
   "dependencies": {
-    "js-beautify": "^1.15.4",
+    "js-beautify": "^2.0.3",
     "lodash": "^4",
     "vdom-parser": "^1",
     "vdom-to-html": "^2.3.1",
@@ -33,10 +33,10 @@
     "virtual-dom": "^2"
   },
   "devDependencies": {
-    "jsdom": "^29.1.1",
-    "oxfmt": "^0.63.0",
-    "oxlint": "^1.78.0",
-    "vitest": "^4.0.15"
+    "jsdom": "^30.0.1",
+    "oxfmt": "^0.65.0",
+    "oxlint": "^1.80.0",
+    "vitest": "^4.1.11"
   },
-  "packageManager": "pnpm@11.20.0"
+  "packageManager": "pnpm@11.24.0"
 }
